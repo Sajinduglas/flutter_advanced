@@ -27,12 +27,15 @@ class FireBaseCrud extends StatefulWidget {
 class _FireBaseCrudState extends State<FireBaseCrud> {
   var name_cntl = TextEditingController();
   var Email_cntrl = TextEditingController();
-  late CollectionReference _userCollection;///collection instance create cheyanam it is similar to table of sqflite we need to create table name
+  late CollectionReference _userCollection;
+ // CollectionReference users = FirebaseFirestore.instance.collection('users');
+
+  ///collection instance create cheyanam it is similar to table of sqflite we need to create table name
 
   @override
   void initState() {
     _userCollection = FirebaseFirestore.instance.collection("users");
-    super.initState(  );
+    super.initState();
   }
 
   @override
@@ -62,16 +65,21 @@ class _FireBaseCrudState extends State<FireBaseCrud> {
                 },
                 child: Text("Add user")),
 
+            ///snapshot  snapshot in Flutter is like a quick snapshot or picture of the current status of something, especially when dealing with asynchronous operations like fetching data. It helps you see if everything is okay, if there's an error, or if it's still in the process of getting information. It's a way to check the latest update or situation at a specific moment in your app.
             StreamBuilder<QuerySnapshot>(
+                //It's used to rebuild the UI in response to changes in the stream of data.
                 stream: getUser(),
+                // Listen to a stream that fetches data from Firestore
                 builder: (context, snapshot) {
+                  //Rebuild the UI whenever there's a new snapshot
                   if (snapshot.hasError) {
+                    //// Check if there's an error in the snapshot
                     return Text('Error ${snapshot.error}');
                   }
                   if (snapshot.connectionState == ConnectionState.waiting) {
-                    return CircularProgressIndicator();
+                    return CircularProgressIndicator();  //// Show a loading spinner while waiting for data
                   }
-                  final users = snapshot.data!.docs;
+                  final users = snapshot.data!.docs;  // // Extract the list of user documents from the snapshot
                   return Expanded(
                       child: ListView.builder(
                           itemCount: users.length,
@@ -148,7 +156,7 @@ class _FireBaseCrudState extends State<FireBaseCrud> {
   }
 
   ///creste user
-  
+
   Future<void> adduser() async {
     return _userCollection
         .add({'name': name_cntl.text, 'email': Email_cntrl.text}).then((value) {
@@ -159,8 +167,8 @@ class _FireBaseCrudState extends State<FireBaseCrud> {
       print("failed to add user $error");
     });
   }
-  
-///read user
+
+  ///read user
   ///
   Stream<QuerySnapshot> getUser() {
     return _userCollection.snapshots();
@@ -186,4 +194,6 @@ class _FireBaseCrudState extends State<FireBaseCrud> {
       print("User deletion failed $error");
     });
   }
+
+
 }
