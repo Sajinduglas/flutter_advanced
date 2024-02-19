@@ -76,22 +76,11 @@
     <!-- Permissions options for the system alert windows group -->
     <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW" />
 
-    <!-- Permissions options for the request install packages group -->
+    <!-- Permissions options for the request install package="com.sajin.flutter_advanced">
     <uses-permission android:name="android.permission.REQUEST_INSTALL_PACKAGES" />
 
-    <!-- Permissions options for the access notification policy group -->
+    <!- Permissions options for the access notification policy group -->
     <uses-permission android:name="android.permission.ACCESS_NOTIFICATION_POLICY"/>
-
-
-
-
-
-
-
-
-
-
-
 
 
 
